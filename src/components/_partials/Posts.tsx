@@ -1,6 +1,6 @@
-import ReactionsOnPost from "./PostReactions";
+import ReactionsOnPost from "./ReactionsOnPost";
 import { ServiceTypes } from "../../types";
-import Summary from "../_partials/Summary";
+import Summary from "./SummaryOnPost";
 // @ts-ignore
 import UserImage from "../../static/user.png";
 // @ts-ignore
@@ -9,9 +9,11 @@ import UserPostImage from "../../static/user_post.png";
 export default function DisplayPosts({
   usersList,
   reactionsList,
+  overallReactions,
 }: {
   usersList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
+  overallReactions: ServiceTypes.Reaction[];
 }) {
   const style: any = {
     marginTop: "9px",
@@ -47,6 +49,7 @@ export default function DisplayPosts({
                             <ReactionsOnPost
                               userList={usersList}
                               reactionsList={reactionsList}
+                              overallReactions={overallReactions}
                               contentId={1}
                             />
                           </div>
@@ -94,6 +97,7 @@ export default function DisplayPosts({
                             <ReactionsOnPost
                               userList={usersList}
                               reactionsList={reactionsList}
+                              overallReactions={overallReactions}
                               contentId={2}
                             />
                           </div>

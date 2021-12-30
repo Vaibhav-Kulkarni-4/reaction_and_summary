@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type { ServiceTypes } from "../../types";
-import Table from "../core/Table";
+import Table from "./UsersSummary";
 
 export default function SummaryTab({
   usersList,
@@ -26,9 +26,10 @@ export default function SummaryTab({
   }
 
   useEffect(() => {
-    let currentContentReactions = getCommonReactions(reactionsList).filter(
+    let currentContentReactions: any = getCommonReactions(reactionsList).filter(
       (reaction) => reaction.content_id === contentId
     );
+    // Add "All" section to the reaction tab list
     currentContentReactions = [
       ...currentContentReactions,
       {
@@ -46,23 +47,22 @@ export default function SummaryTab({
 
   function renderSummary(selectedTab: string) {
     const newFilteredCommonReactions = filterCommonReactions;
+    // Set all other unactive tabs to false. Only highlight current selected tab
     newFilteredCommonReactions.forEach((user) => {
       if (user.name !== selectedTab) {
         user.current = false;
       }
     });
-    console.log(
-      "newFilteredCommonReactions",
-      newFilteredCommonReactions,
-      "\n",
-      filteredData
-    );
+
     setfilterCommonReactions(newFilteredCommonReactions);
-    if (selectedTab !== "All") {
+
+    if (selectedTab === emojiName) {
+      setEmojiName("");
+    } else if (selectedTab !== "All") {
       setFilteredData(usersList.filter((user) => user.name === selectedTab));
       setEmojiName(selectedTab);
     } else {
-      let currentPostReactions: string[] = [];
+      let currentPostReactions: string[] = []; // ["Sad", "Happy", ...]
       for (const i of newFilteredCommonReactions) {
         currentPostReactions = [...new Set(currentPostReactions), i.name];
       }
@@ -76,6 +76,8 @@ export default function SummaryTab({
   function getReactionsCount(iconName: string) {
     return usersList.filter((user) => user?.name === iconName).length || 0;
   }
+
+  console.log("filterCommonReactions", filterCommonReactions);
 
   return (
     <div>
@@ -98,7 +100,7 @@ export default function SummaryTab({
               {tab.name !== "All" ? tab?.emoji : "All"}
               {tab.name !== "All" ? (
                 <span>
-                  <span className="mx-1">.</span>
+                  <span className="mx-1">·</span>
                   <span>{getReactionsCount(tab?.name)}</span>
                 </span>
               ) : (

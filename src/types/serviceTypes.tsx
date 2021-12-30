@@ -13,10 +13,10 @@ export type User = {
 
 export type Reaction = {
   emoji: string;
-  id?: number;
+  id: number;
   name: string;
   current: boolean;
-  content_id?: number;
+  content_id: number;
 };
 
 export type SummaryTabs = {

@@ -1,8 +1,8 @@
-function Tooltip() {
+function Tooltip({ message }: { message: string }) {
   return (
     <div className="absolute -top-4 -left-6 mx-2">
       <div className="bg-coolestGray-900 flex items-center text-white rounded-full py-0.5 px-2 right-0 bottom-full font-normal not-italic text-xs">
-        Tooltip center
+        {message}
         <svg
           className="absolute text-black h-2 w-full left-0 top-full"
           x="0px"
