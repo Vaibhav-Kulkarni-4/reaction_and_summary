@@ -1,20 +1,4 @@
-import ClapsIcon from "../icons/ClapsIcon";
-import LoveIcon from "../icons/LoveIcon";
-import ThumbsUpIcon from "../icons/ThumbsUpIcon";
-
 export default function Table({ list }: { list: any[] }) {
-  console.log("my list", list);
-  function getIconMapping(iconName: string) {
-    switch (iconName) {
-      case "ThumbsUpIcon":
-        return <ThumbsUpIcon />;
-      case "LoveIcon":
-        return <LoveIcon />;
-      case "ClapsIcon":
-        return <ClapsIcon />;
-    }
-  }
-
   return (
     <div className="flex flex-col font-display h-80 overflow-scroll">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -35,7 +19,7 @@ export default function Table({ list }: { list: any[] }) {
                         </div>
                         <div className="">
                           <div className="text-sm text-gray-500">
-                            {getIconMapping(data.emoji.name)}
+                            {data.emoji}
                             <div className="text-sm font-medium text-gray-900 invisible">
                               -
                             </div>

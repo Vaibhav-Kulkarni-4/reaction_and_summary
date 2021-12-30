@@ -6,12 +6,17 @@ export type User = {
   last_name: string;
   emoji: string;
   name: string;
+  content_id: number;
+  reaction_id: number;
+  user_id: number;
 };
 
 export type Reaction = {
   emoji: string;
-  id: number;
+  id?: number;
   name: string;
+  current: boolean;
+  content_id?: number;
 };
 
 export type SummaryTabs = {
@@ -21,4 +26,11 @@ export type SummaryTabs = {
     emoji: any;
     id: number;
   };
+};
+
+export type UserContentReaction = {
+  content_id: number;
+  id: number;
+  reaction_id: number;
+  user_id: number;
 };

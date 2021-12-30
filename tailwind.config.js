@@ -8,6 +8,7 @@ module.exports = {
           50: "#E0E0E0",
           100: "#EDEEF0",
           200: "#393939",
+          300: "#F4F4F4",
           900: "#161616",
         },
         coolestBlue: {
