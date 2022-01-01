@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         coolestGray: {
+          10: "#E5E5E5",
           50: "#E0E0E0",
           100: "#EDEEF0",
           200: "#393939",
@@ -13,6 +14,8 @@ module.exports = {
         },
         coolestBlue: {
           100: "#0F62FE",
+          200: "#EDF5FF",
+          300: "#0F62FE",
         },
       },
       fontFamily: {

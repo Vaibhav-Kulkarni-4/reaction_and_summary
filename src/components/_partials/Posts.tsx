@@ -5,6 +5,7 @@ import Summary from "./SummaryOnPost";
 import UserImage from "../../static/user.png";
 // @ts-ignore
 import UserPostImage from "../../static/user_post.png";
+import { useState } from "react";
 
 export default function DisplayPosts({
   usersList,
@@ -15,9 +16,21 @@ export default function DisplayPosts({
   reactionsList: ServiceTypes.Reaction[];
   overallReactions: ServiceTypes.Reaction[];
 }) {
+  const [toggleSummaryTab, setToggleSummaryTab] = useState({
+    status: false,
+    contentId: 0,
+  });
   const style: any = {
     marginTop: "9px",
   };
+
+  function getSummaryTabToggleStatus(contentId: number) {
+    setToggleSummaryTab({
+      status: !toggleSummaryTab.status,
+      contentId,
+    });
+  }
+
   return (
     <div>
       <div className="flex flex-col">
@@ -51,6 +64,9 @@ export default function DisplayPosts({
                               reactionsList={reactionsList}
                               overallReactions={overallReactions}
                               contentId={1}
+                              getSummaryTabToggleStatus={
+                                getSummaryTabToggleStatus
+                              }
                             />
                           </div>
                         </div>
@@ -59,11 +75,15 @@ export default function DisplayPosts({
                   </tr>
                 </tbody>
               </table>
-              <Summary
-                usersList={usersList}
-                reactionsList={reactionsList}
-                contentId={1}
-              />
+              {toggleSummaryTab.status && toggleSummaryTab.contentId === 1 ? (
+                <Summary
+                  usersList={usersList}
+                  reactionsList={reactionsList}
+                  contentId={1}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
@@ -99,6 +119,9 @@ export default function DisplayPosts({
                               reactionsList={reactionsList}
                               overallReactions={overallReactions}
                               contentId={2}
+                              getSummaryTabToggleStatus={
+                                getSummaryTabToggleStatus
+                              }
                             />
                           </div>
                         </div>
@@ -107,11 +130,15 @@ export default function DisplayPosts({
                   </tr>
                 </tbody>
               </table>
-              <Summary
-                usersList={usersList}
-                reactionsList={reactionsList}
-                contentId={2}
-              />
+              {toggleSummaryTab.status && toggleSummaryTab.contentId === 2 ? (
+                <Summary
+                  usersList={usersList}
+                  reactionsList={reactionsList}
+                  contentId={2}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

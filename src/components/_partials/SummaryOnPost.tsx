@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { ReactionPostHelper } from "../../helpers";
 import type { ServiceTypes } from "../../types";
 import Table from "./UsersSummary";
 
@@ -17,28 +18,51 @@ export default function SummaryTab({
   >([]);
   const [filteredData, setFilteredData] = useState<ServiceTypes.User[]>([]);
   const [emojiName, setEmojiName] = useState("");
+  let finalData: ServiceTypes.Reaction[] = [];
+  let countOfReactions: any = {};
 
-  function getCommonReactions(reactions: ServiceTypes.Reaction[]) {
-    const ids = reactionsList.map((i) => i.id);
-    return (
-      reactions.filter(({ id }, index) => !ids.includes(id, index + 1)) || []
+  function getCommonReactions() {
+    const usersForCurrentContent = usersList.filter(
+      (user) => user.content_id === contentId
     );
+
+    const reactionsForCurrentContent = reactionsList.filter(
+      (reaction) => reaction.content_id === contentId
+    );
+
+    const reactionsCountForCurrentPost: any =
+      ReactionPostHelper.default.getReactionsCountForPost(
+        usersForCurrentContent,
+        reactionsForCurrentContent
+      );
+
+    for (const i in reactionsCountForCurrentPost) {
+      for (const reaction of reactionsForCurrentContent) {
+        if (i === reaction.emoji) {
+          finalData = [];
+          const count = reactionsCountForCurrentPost[i];
+          countOfReactions[i] = {
+            content_id: reaction.content_id,
+            current: false,
+            id: reaction.id,
+            emoji: reaction.emoji,
+            name: reaction.name,
+            count,
+          };
+          finalData.push(countOfReactions[i]);
+        }
+      }
+    }
+    // Add "All" section to the reaction tab list
+    countOfReactions = {
+      ...countOfReactions,
+      ...{ ["All"]: { emoji: "", name: "All", current: false } },
+    };
+    return countOfReactions;
   }
 
   useEffect(() => {
-    let currentContentReactions: any = getCommonReactions(reactionsList).filter(
-      (reaction) => reaction.content_id === contentId
-    );
-    // Add "All" section to the reaction tab list
-    currentContentReactions = [
-      ...currentContentReactions,
-      {
-        emoji: "",
-        name: "All",
-        current: false,
-      },
-    ];
-    setfilterCommonReactions(currentContentReactions);
+    setfilterCommonReactions(getCommonReactions());
   }, [reactionsList?.length]);
 
   function classNames(...classes: string[]) {
@@ -48,11 +72,11 @@ export default function SummaryTab({
   function renderSummary(selectedTab: string) {
     const newFilteredCommonReactions = filterCommonReactions;
     // Set all other unactive tabs to false. Only highlight current selected tab
-    newFilteredCommonReactions.forEach((user) => {
-      if (user.name !== selectedTab) {
-        user.current = false;
+    for (const i in newFilteredCommonReactions) {
+      if (newFilteredCommonReactions[i].name !== selectedTab) {
+        newFilteredCommonReactions[i].current = false;
       }
-    });
+    }
 
     setfilterCommonReactions(newFilteredCommonReactions);
 
@@ -63,8 +87,11 @@ export default function SummaryTab({
       setEmojiName(selectedTab);
     } else {
       let currentPostReactions: string[] = []; // ["Sad", "Happy", ...]
-      for (const i of newFilteredCommonReactions) {
-        currentPostReactions = [...new Set(currentPostReactions), i.name];
+      for (const i in newFilteredCommonReactions) {
+        currentPostReactions = [
+          ...new Set(currentPostReactions),
+          newFilteredCommonReactions[i].name,
+        ];
       }
       setFilteredData(
         usersList.filter((user) => currentPostReactions.indexOf(user.name) > -1)
@@ -73,15 +100,12 @@ export default function SummaryTab({
     }
   }
 
-  function getReactionsCount(iconName: string) {
-    return usersList.filter((user) => user?.name === iconName).length || 0;
-  }
-
-  console.log("filterCommonReactions", filterCommonReactions);
-
   return (
     <div>
       <div className="px-6 border-b border-gray-200 overflow-y-hidden">
+        <p className="font-display font-semibold text-base not-italic leading-4 tracking-wide text-coolestGray-900">
+          Reactions
+        </p>
         <nav className="-mb-px z-10 flex space-x-8" aria-label="Tabs">
           {Object.values(filterCommonReactions).map((tab) => (
             <p
@@ -101,7 +125,7 @@ export default function SummaryTab({
               {tab.name !== "All" ? (
                 <span>
                   <span className="mx-1">·</span>
-                  <span>{getReactionsCount(tab?.name)}</span>
+                  <span>{tab.count}</span>
                 </span>
               ) : (
                 ""

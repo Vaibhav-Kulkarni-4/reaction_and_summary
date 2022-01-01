@@ -17,6 +17,7 @@ export type Reaction = {
   name: string;
   current: boolean;
   content_id: number;
+  count?: number;
 };
 
 export type SummaryTabs = {
