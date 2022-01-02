@@ -42,22 +42,18 @@ export default function DisplayPosts({
                   <tr key="post_1">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
+                        <div className="cursor-pointer flex-shrink-0 h-10 w-10" onClick={() => getSummaryTabToggleStatus(1)}>
                           <img className="h-10 w-10 rounded-full" src={UserImage} alt="" />
                         </div>
                         <div className="ml-4 font-display">
-                          <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
-                          <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
-                            Hello Robert! Let’s get started
+                          <div className="cursor-pointer" onClick={() => getSummaryTabToggleStatus(1)}>
+                            <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                            <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
+                              Hello Robert! Let’s get started
+                            </div>
                           </div>
-                          <div className="">
-                            <ReactionsOnPost
-                              userList={usersList}
-                              reactionsList={reactionsList}
-                              overallReactions={overallReactions}
-                              contentId={1}
-                              getSummaryTabToggleStatus={getSummaryTabToggleStatus}
-                            />
+                          <div>
+                            <ReactionsOnPost userList={usersList} reactionsList={reactionsList} overallReactions={overallReactions} contentId={1} />
                           </div>
                         </div>
                       </div>
@@ -83,22 +79,19 @@ export default function DisplayPosts({
                   <tr key="post_1">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
+                        <div className="cursor-pointer flex-shrink-0 h-10 w-10" onClick={() => getSummaryTabToggleStatus(2)}>
                           <img className="h-10 w-10 rounded-full" src={UserImage} alt="" />
                         </div>
                         <div className="ml-4 font-display">
-                          <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
-                          <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
-                            <img src={UserPostImage} className="w-56 h-56" />
+                          <div className="cursor-pointer" onClick={() => getSummaryTabToggleStatus(2)}>
+                            <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                            <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
+                              <img src={UserPostImage} className="w-56 h-56" />
+                            </div>
                           </div>
-                          <div className="">
-                            <ReactionsOnPost
-                              userList={usersList}
-                              reactionsList={reactionsList}
-                              overallReactions={overallReactions}
-                              contentId={2}
-                              getSummaryTabToggleStatus={getSummaryTabToggleStatus}
-                            />
+
+                          <div>
+                            <ReactionsOnPost userList={usersList} reactionsList={reactionsList} overallReactions={overallReactions} contentId={2} />
                           </div>
                         </div>
                       </div>

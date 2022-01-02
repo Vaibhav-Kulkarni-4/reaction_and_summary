@@ -42,13 +42,7 @@ A powerful serverless platform with an intuitive git-based workflow.
 
 See [Deployment for React on Netlify](https://create-react-app.dev/docs/deployment/#netlify) for more info.
 
-## Making the app production ready
-
-### Links
-
-1. [Husky pre-commit hook with ESLint, Prettier and lint-staged](https://dev.to/botreetechnologies/setting-up-husky-pre-commit-hook-with-eslint-prettier-and-lint-staged-for-react-and-react-native-d05)
-2. [Setup ESLint and Prettier for React Apps](https://thomaslombart.com/setup-eslint-prettier-react)
-3. [Add ESLint, Prettier, and Hisky git-hook](https://medium.com/litslink/react-js-adding-eslint-with-prettier-husky-git-hook-480ad39e65e9)
+[Deploying React App to Netlify](https://www.netlify.com/blog/2016/07/22/deploy-react-apps-in-less-than-30-seconds/)
 
 ## Tools Used
 
@@ -69,3 +63,11 @@ See [ESLint](https://eslint.org/) for more info.
 Prettier is an opinionated code formatter that can format our code with the help of rules that you set or defaults are used.
 
 See [Prettier](https://prettier.io/) for more info.
+
+## Making the app production ready
+
+### Links
+
+1. [Husky pre-commit hook with ESLint, Prettier and lint-staged](https://dev.to/botreetechnologies/setting-up-husky-pre-commit-hook-with-eslint-prettier-and-lint-staged-for-react-and-react-native-d05)
+2. [Setup ESLint and Prettier for React Apps](https://thomaslombart.com/setup-eslint-prettier-react)
+3. [Add ESLint, Prettier, and Hisky git-hook](https://medium.com/litslink/react-js-adding-eslint-with-prettier-husky-git-hook-480ad39e65e9)

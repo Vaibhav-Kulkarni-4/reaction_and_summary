@@ -10,14 +10,9 @@ function ReactionBadge({
 }: {
   overallReactions: ServiceTypes.Reaction[];
   tooltipMessage: string;
-  // @ts-ignore
   addNewReaction: (reactionId: number) => {};
 }) {
-  // @ts-ignore
   let [tooltip, setTooltip] = useState(false);
-  // function addNewReaction() {
-  //   setTooltip(!tooltip);
-  // }
 
   return (
     // removing -bottom-16 from below div coz it was overlapping All tab button
@@ -33,21 +28,6 @@ function ReactionBadge({
             {reaction.emoji}
           </button>
         ))}
-
-        {/* <button
-          onClick={addNewReaction}
-          type="button"
-          className="relative flex justify-center items-center w-10 h-4 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-          {tooltip ? <Tooltip message={tooltipMessage} /> : ""}
-          <ThumbsUpIcon className="z-20 absolute top-0 hover:w-auto hover:h-8 hover:-top-5" />
-        </button>
-        <button
-          onClick={addNewReaction}
-          type="button"
-          className="relative flex justify-center items-center w-10 h-4 rounded-r-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-          {tooltip ? <Tooltip message={tooltipMessage} /> : ""}
-          <ClapsIcon className="z-20 absolute top-0 hover:w-auto hover:h-8 hover:-top-5" />
-        </button> */}
       </span>
     </div>
   );

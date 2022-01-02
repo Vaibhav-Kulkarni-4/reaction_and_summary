@@ -29,8 +29,6 @@ function Home() {
         setUsers(usersContentReaction);
         setReactions(summaryTabsReactions);
         setOverallReactions(reactionsData?.data);
-        // setUserContentReactionMapping(userReactionMapping?.data)
-        console.log("DATA", usersContentReaction, summaryTabsReactions, userReactionMapping?.data);
       }
     })();
   }, []);

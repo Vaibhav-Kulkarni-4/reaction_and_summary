@@ -89,7 +89,7 @@ export default function SummaryTab({
     <div>
       <div className="px-6 border-b border-gray-200 overflow-y-hidden">
         <p className="font-display font-semibold text-base not-italic leading-4 tracking-wide text-coolestGray-900">Reactions</p>
-        <nav className="-mb-px z-10 flex space-x-8" aria-label="Tabs">
+        <nav className="-mb-px z-10 flex space-x-8 cursor-pointer" aria-label="Tabs">
           {Object.values(filterCommonReactions).map((tab) => (
             <p
               onClick={() => {

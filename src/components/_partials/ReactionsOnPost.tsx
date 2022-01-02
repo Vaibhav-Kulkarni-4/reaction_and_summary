@@ -12,14 +12,11 @@ export default function ReactionsOnPost({
   reactionsList,
   contentId,
   overallReactions,
-  getSummaryTabToggleStatus,
 }: {
   userList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
   contentId: number;
   overallReactions: ServiceTypes.Reaction[];
-  // @ts-ignore
-  getSummaryTabToggleStatus: (contentId: number) => void;
 }) {
   const [isLoaded, setIsLoaded] = useState(true);
   const [toggleReactionsTab, setReactionTab] = useState(false);
@@ -41,7 +38,6 @@ export default function ReactionsOnPost({
     setReactionTab(!toggleReactionsTab);
   }
 
-  // @ts-ignore
   async function deleteUserReaction(reaction: string) {
     setIsLoaded(false);
     const dataToSend = {
@@ -97,11 +93,10 @@ export default function ReactionsOnPost({
           reactionsCountForPost[i] ? (
             <span
               key={i}
-              className={`inline-flex items-center px-2 py-0.5 rounded-full text-base font-medium text-gray-800 border border-solid m-0.5 ${
+              className={`cursor-pointer inline-flex items-center px-2 py-0.5 rounded-full text-base font-medium text-gray-800 border border-solid m-0.5 ${
                 isActivated.status && isActivated.emoji === i ? `bg-coolestBlue-200 border-coolestBlue-300` : `bg-coolestGray-300 border-white`
               }`}
-              // onClick={() => deleteUserReaction(i)}
-              onClick={() => getSummaryTabToggleStatus(contentId)}>
+              onClick={() => deleteUserReaction(i)}>
               {`${i} · ${reactionsCountForPost[i]}`}
             </span>
           ) : (
