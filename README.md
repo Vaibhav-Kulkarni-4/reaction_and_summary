@@ -1,4 +1,4 @@
-## [Demo](https://github.com/Vaibhav-Kulkarni-4/reaction_and_summary)
+## [Demo](https://modest-leakey-885f30.netlify.app/)
 
 # Setting Up The Application
 
