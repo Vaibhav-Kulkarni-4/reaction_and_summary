@@ -7,9 +7,7 @@ export default function Loader({ message }: { message: string }) {
         <div>
           <SpinnerIcon />
         </div>
-        <div className="absolute flex items-center justify-center mt-36">
-          {message}
-        </div>
+        <div className="absolute flex items-center justify-center mt-36">{message}</div>
       </div>
     </div>
   );

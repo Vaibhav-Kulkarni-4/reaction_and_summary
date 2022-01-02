@@ -1,10 +1,6 @@
 export default function SpinnerIcon() {
   return (
-    <svg
-      version="1.1"
-      viewBox="-58 -58 116 116"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg version="1.1" viewBox="-58 -58 116 116" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <g strokeLinecap="round" strokeWidth="15">
         <path id="a" d="m0 35 0,14" />
         <use transform="rotate(210)" xlinkHref="#a" stroke="#f0f0f0" />

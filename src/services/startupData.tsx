@@ -28,15 +28,7 @@ export async function getUserReactionsMapping() {
   }
 }
 
-export async function updateReactionsForPost({
-  user_id,
-  reaction_id,
-  content_id,
-}: {
-  user_id: number;
-  reaction_id: number;
-  content_id: number;
-}) {
+export async function updateReactionsForPost({ user_id, reaction_id, content_id }: { user_id: number; reaction_id: number; content_id: number }) {
   try {
     return await httpHandler.makeRequest({
       url: "/user_content_reactions",

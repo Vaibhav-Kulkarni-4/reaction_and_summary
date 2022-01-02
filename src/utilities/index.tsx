@@ -1,1 +1,1 @@
-export * as httpHandler from "./httpHandler"
+export * as httpHandler from "./httpHandler";

@@ -43,19 +43,11 @@ export default function DisplayPosts({
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
-                          <img
-                            className="h-10 w-10 rounded-full"
-                            src={UserImage}
-                            alt=""
-                          />
+                          <img className="h-10 w-10 rounded-full" src={UserImage} alt="" />
                         </div>
                         <div className="ml-4 font-display">
-                          <div className="text-base text-coolestGray-900 font-bold leading-5">
-                            Sri krishnan
-                          </div>
-                          <div
-                            className="text-base text-coolestGray-900 font-normal leading-5"
-                            style={style}>
+                          <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                          <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
                             Hello Robert! Let’s get started
                           </div>
                           <div className="">
@@ -64,9 +56,7 @@ export default function DisplayPosts({
                               reactionsList={reactionsList}
                               overallReactions={overallReactions}
                               contentId={1}
-                              getSummaryTabToggleStatus={
-                                getSummaryTabToggleStatus
-                              }
+                              getSummaryTabToggleStatus={getSummaryTabToggleStatus}
                             />
                           </div>
                         </div>
@@ -76,11 +66,7 @@ export default function DisplayPosts({
                 </tbody>
               </table>
               {toggleSummaryTab.status && toggleSummaryTab.contentId === 1 ? (
-                <Summary
-                  usersList={usersList}
-                  reactionsList={reactionsList}
-                  contentId={1}
-                />
+                <Summary usersList={usersList} reactionsList={reactionsList} contentId={1} />
               ) : (
                 <></>
               )}
@@ -98,19 +84,11 @@ export default function DisplayPosts({
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
-                          <img
-                            className="h-10 w-10 rounded-full"
-                            src={UserImage}
-                            alt=""
-                          />
+                          <img className="h-10 w-10 rounded-full" src={UserImage} alt="" />
                         </div>
                         <div className="ml-4 font-display">
-                          <div className="text-base text-coolestGray-900 font-bold leading-5">
-                            Sri krishnan
-                          </div>
-                          <div
-                            className="text-base text-coolestGray-900 font-normal leading-5"
-                            style={style}>
+                          <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                          <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
                             <img src={UserPostImage} className="w-56 h-56" />
                           </div>
                           <div className="">
@@ -119,9 +97,7 @@ export default function DisplayPosts({
                               reactionsList={reactionsList}
                               overallReactions={overallReactions}
                               contentId={2}
-                              getSummaryTabToggleStatus={
-                                getSummaryTabToggleStatus
-                              }
+                              getSummaryTabToggleStatus={getSummaryTabToggleStatus}
                             />
                           </div>
                         </div>
@@ -131,11 +107,7 @@ export default function DisplayPosts({
                 </tbody>
               </table>
               {toggleSummaryTab.status && toggleSummaryTab.contentId === 2 ? (
-                <Summary
-                  usersList={usersList}
-                  reactionsList={reactionsList}
-                  contentId={2}
-                />
+                <Summary usersList={usersList} reactionsList={reactionsList} contentId={2} />
               ) : (
                 <></>
               )}

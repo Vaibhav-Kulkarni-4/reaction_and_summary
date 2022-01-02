@@ -11,27 +11,19 @@ export default function Table({ list }: { list: any[] }) {
                     <td className="pl-3.5 pt-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="flex-shrink-0 h-10 w-10">
-                          <img
-                            className="h-5 w-5 rounded-full box-border"
-                            src={data.avatar}
-                            alt=""
-                          />
+                          <img className="h-5 w-5 rounded-full box-border" src={data.avatar} alt="" />
                         </div>
                         <div className="">
                           <div className="text-sm text-gray-500">
                             {data.emoji}
-                            <div className="text-sm font-medium text-gray-900 invisible">
-                              -
-                            </div>
+                            <div className="text-sm font-medium text-gray-900 invisible">-</div>
                           </div>
                         </div>
                         <div className="pl-3">
                           <div className="text-base text-coolestGray-200 font-normal not-italic leading-5">
                             {`${data.first_name} ${data.last_name}`}
                           </div>
-                          <div className="text-sm font-medium text-gray-900 invisible">
-                            -
-                          </div>
+                          <div className="text-sm font-medium text-gray-900 invisible">-</div>
                         </div>
                       </div>
                     </td>

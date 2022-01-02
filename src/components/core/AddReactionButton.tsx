@@ -3,16 +3,8 @@ import React from "react";
 function AddReactionButton() {
   return (
     <figure className="inline">
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z"
-          fill="#EDEEF0"
-        />
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16Z" fill="#EDEEF0" />
         <path
           d="M16 31C7.71573 31 1 24.2843 1 16H-1C-1 25.3888 6.61116 33 16 33V31ZM31 16C31 24.2843 24.2843 31 16 31V33C25.3888 33 33 25.3888 33 16H31ZM16 1C24.2843 1 31 7.71573 31 16H33C33 6.61116 25.3888 -1 16 -1V1ZM16 -1C6.61116 -1 -1 6.61116 -1 16H1C1 7.71573 7.71573 1 16 1V-1Z"
           fill="white"
@@ -27,12 +19,7 @@ function AddReactionButton() {
         </g>
         <defs>
           <clipPath id="clip0_5_178">
-            <rect
-              width="14"
-              height="15"
-              fill="white"
-              transform="translate(8.77417 8)"
-            />
+            <rect width="14" height="15" fill="white" transform="translate(8.77417 8)" />
           </clipPath>
         </defs>
       </svg>

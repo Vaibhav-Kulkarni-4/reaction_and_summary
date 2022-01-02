@@ -1,11 +1,7 @@
 import type { ServiceTypes } from "../types";
 
 class ServiceHelper {
-  curateUsersReactionList(
-    users: ServiceTypes.User[],
-    reactions: ServiceTypes.Reaction[],
-    userReactions: ServiceTypes.UserContentReaction[]
-  ) {
+  curateUsersReactionList(users: ServiceTypes.User[], reactions: ServiceTypes.Reaction[], userReactions: ServiceTypes.UserContentReaction[]) {
     for (const i of users) {
       for (const j of userReactions) {
         if (i.id === j.user_id) {
@@ -41,11 +37,11 @@ class ServiceHelper {
       userReactions = [
         ...userReactions,
         {
-          ["emoji"]: user.emoji,
-          ["id"]: user.reaction_id,
-          ["name"]: user.name,
-          ["content_id"]: user.content_id,
-          ["current"]: false,
+          emoji: user.emoji,
+          id: user.reaction_id,
+          name: user.name,
+          content_id: user.content_id,
+          current: false,
         },
       ];
     }

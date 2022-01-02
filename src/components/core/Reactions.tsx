@@ -10,8 +10,10 @@ function ReactionBadge({
 }: {
   overallReactions: ServiceTypes.Reaction[];
   tooltipMessage: string;
+  // @ts-ignore
   addNewReaction: (reactionId: number) => {};
 }) {
+  // @ts-ignore
   let [tooltip, setTooltip] = useState(false);
   // function addNewReaction() {
   //   setTooltip(!tooltip);

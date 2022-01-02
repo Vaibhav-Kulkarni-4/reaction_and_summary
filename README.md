@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+## [Demo](https://status-react-app.netlify.app/)
+
+# Setting Up The Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Install Dependencies
 
-In the project directory, you can run:
+`npm install`
 
-### `npm start`
+This installs all the dependencies required onto your machine.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Start App
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+`npm run dev`
 
-### `npm test`
+This commands runs the app in dev mode. This runs the app in the development mode.\
+Open [http://localhost:300](http://localhost:3000) to view it in the browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Make Arrangements To Deploy Application
 
-### `npm run build`
+`npm run build`
 
 Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## CSS Framework Used
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### `Tailwind CSS`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.\
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+See [Setting up Tailwind CSS in a Create React App project](https://tailwindcss.com/docs/guides/create-react-app/) for more info.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Deployment Platform Used
 
-## Learn More
+#### `Netlify`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A powerful serverless platform with an intuitive git-based workflow.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+See [Deployment for React on Netlify](https://create-react-app.dev/docs/deployment/#netlify) for more info.
+
+## Making the app production ready
+
+### Links
+
+1. [Husky pre-commit hook with ESLint, Prettier and lint-staged](https://dev.to/botreetechnologies/setting-up-husky-pre-commit-hook-with-eslint-prettier-and-lint-staged-for-react-and-react-native-d05)
+2. [Setup ESLint and Prettier for React Apps](https://thomaslombart.com/setup-eslint-prettier-react)
+3. [Add ESLint, Prettier, and Hisky git-hook](https://medium.com/litslink/react-js-adding-eslint-with-prettier-husky-git-hook-480ad39e65e9)
+
+## Tools Used
+
+#### `Husky - Git hooks`
+
+Husky improves your commits! You can use it to lint your commit messages, run tests, lint code, etc when you commit or push.
+
+See [Husky - Git hooks](https://typicode.github.io/husky/#/) for more info.
+
+#### `ESLint`
+
+Find and fix problems in your JavaScript and Typescript code
+
+See [ESLint](https://eslint.org/) for more info.
+
+#### `Prettier`
+
+Prettier is an opinionated code formatter that can format our code with the help of rules that you set or defaults are used.
+
+See [Prettier](https://prettier.io/) for more info.

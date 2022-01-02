@@ -1,10 +1,7 @@
 import type { ServiceTypes } from "../types";
 
 class ReactionPostHelper {
-  getReactionsCountForPost(
-    userList: ServiceTypes.User[],
-    reactions: ServiceTypes.Reaction[]
-  ) {
+  getReactionsCountForPost(userList: ServiceTypes.User[], reactions: ServiceTypes.Reaction[]) {
     let reactionsCount: {
       [key: string]: number;
     } = {};

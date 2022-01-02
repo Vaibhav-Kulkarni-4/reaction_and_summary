@@ -8,11 +8,7 @@ function ThumbsUpIcon({ className }: { className?: string }) {
       xmlnsXlink="http://www.w3.org/1999/xlink">
       <path d="M0 14.98H14V0.98H0V14.98Z" fill="url(#pattern0)" />
       <defs>
-        <pattern
-          id="pattern0"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1">
+        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
           <use xlinkHref="#image0_5_137" transform="scale(0.015625)" />
         </pattern>
         <image
