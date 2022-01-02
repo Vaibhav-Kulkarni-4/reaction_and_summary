@@ -4,20 +4,13 @@ export type User = {
   first_name: string;
   id: number;
   last_name: string;
-  emoji: string;
-  name: string;
-  content_id: number;
-  reaction_id: number;
-  user_id: number;
+  emoji?: string;
 };
 
 export type Reaction = {
   emoji: string;
   id: number;
   name: string;
-  current: boolean;
-  content_id: number;
-  count?: number;
 };
 
 export type SummaryTabs = {
@@ -34,4 +27,8 @@ export type UserContentReaction = {
   id: number;
   reaction_id: number;
   user_id: number;
+};
+
+export type ReactionsForPosts = {
+  [key: number]: number;
 };

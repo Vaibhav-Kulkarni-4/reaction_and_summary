@@ -3,83 +3,80 @@ import { useEffect, useState } from "react";
 import AddReactionButton from "../core/AddReactionButton";
 import Loader from "../core/Loading";
 import ReactionBadge from "../core/Reactions";
-import { ReactionPostHelper } from "../../helpers";
+import ReactionPostHelpers from "../../helpers/postsHelpers";
 import { ServiceTypes } from "../../types";
 import { startupDataServices } from "../../services";
 
 export default function ReactionsOnPost({
-  userList,
+  usersList,
   reactionsList,
+  userContentReactionMapping,
   contentId,
-  overallReactions,
 }: {
-  userList: ServiceTypes.User[];
+  usersList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
+  userContentReactionMapping: ServiceTypes.UserContentReaction[];
   contentId: number;
-  overallReactions: ServiceTypes.Reaction[];
 }) {
   const [isLoaded, setIsLoaded] = useState(true);
   const [toggleReactionsTab, setReactionTab] = useState(false);
+  const [reactionsForPost, setReactionsForPost] = useState<ServiceTypes.ReactionsForPosts>({});
   const [isActivated, setIsActivated] = useState({
     status: false,
-    emoji: "",
+    reaction_id: -1,
   });
-  const [reactionsCountForPost, setReactionsCountForPost] = useState<any>({});
-
-  const usersForCurrentContent = userList.filter((user) => user.content_id === contentId);
-
-  const reactionsForCurrentContent = reactionsList.filter((reaction) => reaction.content_id === contentId);
 
   useEffect(() => {
-    setReactionsCountForPost(ReactionPostHelper.default.getReactionsCountForPost(usersForCurrentContent, reactionsForCurrentContent));
-  }, [usersForCurrentContent.length && reactionsForCurrentContent.length]);
+    let currentContentReactionMapping = userContentReactionMapping.filter((i) => i.content_id === contentId);
+    setReactionsForPost(ReactionPostHelpers.getReactionsCountForPost(currentContentReactionMapping));
+  }, [userContentReactionMapping.length]);
 
   function toggleReactionBadge() {
     setReactionTab(!toggleReactionsTab);
   }
 
-  async function deleteUserReaction(reaction: string) {
+  function generateRandomUserId() {
+    return usersList[Math.floor(Math.random() * usersList.length)].id;
+  }
+
+  async function deleteUserReaction(reactionId: number) {
     setIsLoaded(false);
     const dataToSend = {
       // generating random user_id between 1 and length of userslist
-      id: usersForCurrentContent[Math.floor(Math.random() * usersForCurrentContent.length)].id,
+      id: generateRandomUserId(),
     };
     const deletedReaction = await startupDataServices.deleteReactionForPost(dataToSend);
     if (deletedReaction?.data) {
-      reactionsCountForPost[reaction] = reactionsCountForPost[reaction] - 1;
-      setReactionsCountForPost(reactionsCountForPost);
+      reactionsForPost[reactionId] = reactionsForPost[reactionId] - 1;
+      setReactionsForPost(reactionsForPost);
       setIsLoaded(true);
     }
-  }
-
-  function getReactionEmoji(reactionId: number) {
-    return overallReactions.filter((reaction) => reaction.id === reactionId)[0].emoji;
   }
 
   async function addNewReactionToPost(reactionId: number) {
     setIsLoaded(false);
     const dataToSend = {
       // generating random user_id between 0 and length of userslist
-      user_id: Math.floor(Math.random() * reactionsForCurrentContent.length),
+      user_id: generateRandomUserId(),
       reaction_id: reactionId,
       content_id: contentId,
     };
     const addedReaction = await startupDataServices.updateReactionsForPost(dataToSend);
     if (addedReaction?.data) {
       // if reaction exists, then update the value
-      if (reactionsCountForPost[getReactionEmoji(reactionId)]) {
-        reactionsCountForPost[getReactionEmoji(reactionId)] = reactionsCountForPost[getReactionEmoji(reactionId)] + 1;
+      if (reactionsForPost[reactionId]) {
+        reactionsForPost[reactionId] = reactionsForPost[reactionId] + 1;
       }
       // else add the reaction and update the value
       else {
-        reactionsCountForPost[getReactionEmoji(reactionId)] = 1;
+        reactionsForPost[reactionId] = 1;
       }
 
-      setReactionsCountForPost(reactionsCountForPost);
+      setReactionsForPost(reactionsForPost);
       setIsLoaded(true);
-      setIsActivated({ status: true, emoji: getReactionEmoji(reactionId) });
+      setIsActivated({ status: true, reaction_id: reactionId });
       setTimeout(() => {
-        setIsActivated({ status: false, emoji: getReactionEmoji(reactionId) });
+        setIsActivated({ status: false, reaction_id: reactionId });
       }, 2000);
     }
   }
@@ -89,15 +86,17 @@ export default function ReactionsOnPost({
   } else {
     return (
       <div className="mt-3 flex items-center">
-        {Object.keys(reactionsCountForPost).map((i) =>
-          reactionsCountForPost[i] ? (
+        {Object.keys(reactionsForPost).map((i) =>
+          reactionsForPost[Number(i)] ? (
             <span
               key={i}
               className={`cursor-pointer inline-flex items-center px-2 py-0.5 rounded-full text-base font-medium text-gray-800 border border-solid m-0.5 ${
-                isActivated.status && isActivated.emoji === i ? `bg-coolestBlue-200 border-coolestBlue-300` : `bg-coolestGray-300 border-white`
+                isActivated.status && isActivated.reaction_id === Number(i)
+                  ? `bg-coolestBlue-200 border-coolestBlue-300`
+                  : `bg-coolestGray-300 border-white`
               }`}
-              onClick={() => deleteUserReaction(i)}>
-              {`${i} · ${reactionsCountForPost[i]}`}
+              onClick={() => deleteUserReaction(Number(i))}>
+              {`${ReactionPostHelpers.getReactionEmoji(reactionsList, Number(i))} · ${reactionsForPost[Number(i)]}`}
             </span>
           ) : (
             <></>
@@ -105,7 +104,7 @@ export default function ReactionsOnPost({
         )}
         <div className="relative m-0.5" onClick={toggleReactionBadge}>
           {toggleReactionsTab ? (
-            <ReactionBadge overallReactions={overallReactions} tooltipMessage={"Tooltip"} addNewReaction={addNewReactionToPost} />
+            <ReactionBadge reactionsList={reactionsList} tooltipMessage={"Tooltip"} addNewReaction={addNewReactionToPost} />
           ) : (
             <></>
           )}

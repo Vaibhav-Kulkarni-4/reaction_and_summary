@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Loader from "../core/Loading";
-import Posts from "./Posts";
-import { ServiceHelper } from "../../helpers";
+import Posts from "../core/Posts";
 import type { ServiceTypes } from "../../types";
 import { startupDataServices } from "../../services";
 
@@ -10,8 +9,7 @@ function Home() {
   let [isLoaded, setIsLoaded] = useState(false);
   let [users, setUsers] = useState<ServiceTypes.User[]>([]);
   let [reactions, setReactions] = useState<ServiceTypes.Reaction[]>([]);
-  let [overallReactions, setOverallReactions] = useState<ServiceTypes.Reaction[]>([]);
-  // let [userContentReactionMapping, setUserContentReactionMapping] = useState<ServiceTypes.UserContentReaction[]>([])
+  let [userContentReactionMapping, setUserContentReactionMapping] = useState<ServiceTypes.UserContentReaction[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -21,22 +19,17 @@ function Home() {
 
       if (usersData?.data || reactionsData?.data || userReactionMapping?.data) {
         setIsLoaded(true);
-      }
-
-      if (usersData?.data && reactionsData?.data && userReactionMapping?.data) {
-        const usersContentReaction = ServiceHelper.default.curateUsersReactionList(usersData?.data, reactionsData?.data, userReactionMapping?.data);
-        const summaryTabsReactions = ServiceHelper.default.createSummaryTabs(usersContentReaction);
-        setUsers(usersContentReaction);
-        setReactions(summaryTabsReactions);
-        setOverallReactions(reactionsData?.data);
+        setUsers(usersData?.data);
+        setReactions(reactionsData?.data);
+        setUserContentReactionMapping(userReactionMapping?.data);
       }
     })();
   }, []);
 
   if (!isLoaded) {
-    return <Loader message="Loading users..." />;
+    return <Loader message="Loading users, reactions..." />;
   } else {
-    return <Posts usersList={users} reactionsList={reactions} overallReactions={overallReactions} />;
+    return <Posts usersList={users} reactionsList={reactions} userContentReactionMapping={userContentReactionMapping} />;
   }
 }
 export default Home;

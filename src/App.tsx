@@ -1,7 +1,6 @@
 import "./styles/output.css";
 
 import Home from "./components/_partials/Home";
-import React from "react";
 
 function App() {
   return (

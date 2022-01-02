@@ -1,6 +1,6 @@
-import ReactionsOnPost from "./ReactionsOnPost";
+import ReactionsOnPost from "../_partials/ReactionsOnPost";
 import { ServiceTypes } from "../../types";
-import Summary from "./SummaryOnPost";
+import Summary from "../_partials/SummaryOnPost";
 // @ts-ignore
 import UserImage from "../../static/user.png";
 // @ts-ignore
@@ -10,11 +10,11 @@ import { useState } from "react";
 export default function DisplayPosts({
   usersList,
   reactionsList,
-  overallReactions,
+  userContentReactionMapping,
 }: {
   usersList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
-  overallReactions: ServiceTypes.Reaction[];
+  userContentReactionMapping: ServiceTypes.UserContentReaction[];
 }) {
   const [toggleSummaryTab, setToggleSummaryTab] = useState({
     status: false,
@@ -35,7 +35,7 @@ export default function DisplayPosts({
     <div>
       <div className="flex flex-col">
         <div className="my-2">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="py-2 align-middle inline-block min-w-full sm:pr-3 lg:px-8">
             <div className="shadow overflow-x-scroll border border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -53,7 +53,12 @@ export default function DisplayPosts({
                             </div>
                           </div>
                           <div>
-                            <ReactionsOnPost userList={usersList} reactionsList={reactionsList} overallReactions={overallReactions} contentId={1} />
+                            <ReactionsOnPost
+                              usersList={usersList}
+                              reactionsList={reactionsList}
+                              userContentReactionMapping={userContentReactionMapping}
+                              contentId={1}
+                            />
                           </div>
                         </div>
                       </div>
@@ -62,7 +67,7 @@ export default function DisplayPosts({
                 </tbody>
               </table>
               {toggleSummaryTab.status && toggleSummaryTab.contentId === 1 ? (
-                <Summary usersList={usersList} reactionsList={reactionsList} contentId={1} />
+                <Summary usersList={usersList} reactionsList={reactionsList} userContentReactionMapping={userContentReactionMapping} contentId={1} />
               ) : (
                 <></>
               )}
@@ -91,7 +96,12 @@ export default function DisplayPosts({
                           </div>
 
                           <div>
-                            <ReactionsOnPost userList={usersList} reactionsList={reactionsList} overallReactions={overallReactions} contentId={2} />
+                            <ReactionsOnPost
+                              usersList={usersList}
+                              reactionsList={reactionsList}
+                              userContentReactionMapping={userContentReactionMapping}
+                              contentId={2}
+                            />
                           </div>
                         </div>
                       </div>
@@ -100,7 +110,7 @@ export default function DisplayPosts({
                 </tbody>
               </table>
               {toggleSummaryTab.status && toggleSummaryTab.contentId === 2 ? (
-                <Summary usersList={usersList} reactionsList={reactionsList} contentId={2} />
+                <Summary usersList={usersList} reactionsList={reactionsList} userContentReactionMapping={userContentReactionMapping} contentId={2} />
               ) : (
                 <></>
               )}
