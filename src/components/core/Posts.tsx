@@ -47,7 +47,10 @@ export default function DisplayPosts({
                         </div>
                         <div className="ml-4 font-display">
                           <div className="cursor-pointer" onClick={() => getSummaryTabToggleStatus(1)}>
-                            <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                            <div className="text-base text-coolestGray-900 font-bold leading-5">
+                              Sri krishnan
+                              <span className="font-display font-normal text-xs text-coolestGray-400 ml-2">4:04 PM</span>
+                            </div>
                             <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
                               Hello Robert! Let’s get started
                             </div>
@@ -89,7 +92,10 @@ export default function DisplayPosts({
                         </div>
                         <div className="ml-4 font-display">
                           <div className="cursor-pointer" onClick={() => getSummaryTabToggleStatus(2)}>
-                            <div className="text-base text-coolestGray-900 font-bold leading-5">Sri krishnan</div>
+                            <div className="text-base text-coolestGray-900 font-bold leading-5">
+                              Sri krishnan
+                              <span className="font-display font-normal text-xs text-coolestGray-400 ml-2">4:08 PM</span>
+                            </div>
                             <div className="text-base text-coolestGray-900 font-normal leading-5" style={style}>
                               <img src={UserPostImage} className="w-56 h-56" />
                             </div>
