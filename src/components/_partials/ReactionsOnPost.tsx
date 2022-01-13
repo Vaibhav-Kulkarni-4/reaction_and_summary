@@ -37,7 +37,7 @@ export default function ReactionsOnPost({
   const [toggleSummaryTab, setToggleSummaryTab] = useState({
     status: false,
     contentId: 0,
-    reactionId: 0,
+    // reactionId: 0,
   });
   const ADD_EVENT = "add";
   const DELETE_EVENT = "delete";
@@ -57,11 +57,10 @@ export default function ReactionsOnPost({
     return usersList[Math.floor(Math.random() * usersList.length)].id;
   }
 
-  function getSummaryTabToggleStatus(reaction_id: number) {
+  function getSummaryTabToggleStatus() {
     setToggleSummaryTab({
       status: !toggleSummaryTab.status,
       contentId,
-      reactionId: reaction_id,
     });
   }
 
@@ -88,15 +87,15 @@ export default function ReactionsOnPost({
   }
 
   async function addNewReactionToPost(reactionId: number) {
+    if (isReactionAlreadyActivated(reactionId)) {
+      deleteUserReaction(reactionId);
+      return;
+    }
     const dataToSend = {
       user_id: 4,
       reaction_id: reactionId,
       content_id: contentId,
     };
-    if (isReactionAlreadyActivated(reactionId)) {
-      deleteUserReaction(reactionId);
-      return;
-    }
     setIsActivated({ status: true, reaction_id: reactionId });
     updateExistingReactions(ADD_EVENT, reactionId, true);
     const addedReactionResponse = await startupDataServices.updateReactionsForPost(dataToSend);
@@ -133,8 +132,16 @@ export default function ReactionsOnPost({
         break;
       }
       case DELETE_EVENT: {
-        reactionsForPost[reactionId] = reactionsForPost[reactionId] - 1;
-        setReactionsForPost(reactionsForPost);
+        // actual condition i.e. deleting the just added reaction
+        if (reactionsForPost[reactionId] && isStatusSuccess) {
+          reactionsForPost[reactionId] = reactionsForPost[reactionId] - 1;
+          setReactionsForPost(reactionsForPost);
+        }
+        // fallback to previous state if service fails
+        else {
+          reactionsForPost[reactionId] = reactionsForPost[reactionId] + 1;
+          setReactionsForPost(reactionsForPost);
+        }
         break;
       }
     }
@@ -157,13 +164,18 @@ export default function ReactionsOnPost({
                   : `bg-coolestGray-300 border-white`
               }`}
               // onClick={() => deleteUserReaction(Number(reaction_id))}
-              onClick={() => getSummaryTabToggleStatus(Number(reaction_id))}>
+              onClick={() => {
+                if (isReactionAlreadyActivated(Number(reaction_id))) addNewReactionToPost(Number(reaction_id));
+              }}>
               {`${ReactionPostHelpers.getReactionEmoji(reactionsList, Number(reaction_id))} · ${reactionsForPost[Number(reaction_id)]}`}
             </span>
           ))}
           <div className="relative m-0.5" onClick={toggleReactionBadge}>
             {toggleReactionsTab ? <ReactionBadge reactionsList={reactionsList} addNewReaction={addNewReactionToPost} /> : <></>}
             <AddReactionButton />
+          </div>
+          <div className="cursor-pointer p-2" onClick={getSummaryTabToggleStatus}>
+            <u>Summary</u>
           </div>
         </div>
         <div>
@@ -173,7 +185,7 @@ export default function ReactionsOnPost({
               reactionsList={reactionsList}
               userContentReactionMapping={userContentReactionMapping}
               contentId={contentId}
-              selectedReactionId={toggleSummaryTab.reactionId}
+              selectedReactionId={0}
             />
           ) : (
             <></>
