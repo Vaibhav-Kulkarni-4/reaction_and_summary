@@ -9,11 +9,13 @@ export default function SummaryTab({
   reactionsList,
   userContentReactionMapping,
   contentId,
+  selectedReactionId,
 }: {
   usersList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
   userContentReactionMapping: ServiceTypes.UserContentReaction[];
   contentId: number;
+  selectedReactionId: number;
 }) {
   const [reactionsForPost, setReactionsForPost] = useState<any>({});
   const [reactionId, setReactionId] = useState<string | number>();
@@ -22,6 +24,10 @@ export default function SummaryTab({
   useEffect(() => {
     setReactionsForPost(ReactionPostHelpers.getUsersCountForReaction(userContentReactionMapping, contentId));
   }, [userContentReactionMapping.length]);
+
+  // useEffect(() => {
+  //   renderSummary(selectedReactionId);
+  // }, []);
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -46,7 +52,7 @@ export default function SummaryTab({
 
   return (
     <div>
-      <div className="px-6 border-b border-gray-200 overflow-y-hidden">
+      <div className="px-1 py-4 border-b border-gray-200 overflow-y-hidden">
         <p className="font-display font-semibold text-base not-italic leading-4 tracking-wide text-coolestGray-900">Reactions</p>
         <nav className="-mb-px z-10 flex space-x-8" aria-label="Tabs">
           {Object.keys(reactionsForPost).map((reactionId) => (

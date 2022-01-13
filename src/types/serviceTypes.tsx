@@ -32,3 +32,10 @@ export type UserContentReaction = {
 export type ReactionsForPosts = {
   [key: number]: number;
 };
+
+export type AddReactionOnPostResponse = {
+  content_id: number;
+  id: number;
+  reaction_id: number;
+  user_id: number;
+};

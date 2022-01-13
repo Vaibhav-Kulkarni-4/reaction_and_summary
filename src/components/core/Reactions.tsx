@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import type { ServiceTypes } from "../../types";
 import Tooltip from "./Tooltip";
 
-function ReactionBadge({
-  reactionsList,
-  tooltipMessage,
-  addNewReaction,
-}: {
-  reactionsList: ServiceTypes.Reaction[];
-  tooltipMessage: string;
-  addNewReaction: (reactionId: number) => {};
-}) {
+function ReactionBadge({ reactionsList, addNewReaction }: { reactionsList: ServiceTypes.Reaction[]; addNewReaction: (reactionId: number) => {} }) {
   let [tooltip, setTooltip] = useState(false);
+
+  // function handleMouseIn() {
+  //   setTooltip(true);
+  // }
+
+  // function handleMouseOut() {
+  //   setTooltip(false);
+  // }
 
   return (
     // removing -bottom-16 from below div coz it was overlapping All tab button
@@ -23,8 +23,11 @@ function ReactionBadge({
             key={reaction.id}
             onClick={() => addNewReaction(reaction.id)}
             type="button"
-            className="relative flex justify-center items-center w-10 h-4 rounded-l-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-            {tooltip ? <Tooltip message={tooltipMessage} /> : ""}
+            className="relative flex justify-center items-center w-10 h-4 rounded-l-md bg-white text-sm font-medium text-gray-700 hover:text-2xl"
+            // onMouseOver={() => handleMouseIn()}
+            // onMouseOut={() => handleMouseOut()}
+          >
+            {tooltip ? <Tooltip message={reaction.name} /> : ""}
             {reaction.emoji}
           </button>
         ))}

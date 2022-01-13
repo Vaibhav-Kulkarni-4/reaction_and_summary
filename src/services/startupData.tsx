@@ -1,3 +1,6 @@
+import axios, { Method, ResponseType } from "axios";
+
+import type { ServiceTypes } from "../types";
 import { httpHandler } from "../utilities";
 
 export async function getUsers() {
@@ -30,7 +33,7 @@ export async function getUserReactionsMapping() {
 
 export async function updateReactionsForPost({ user_id, reaction_id, content_id }: { user_id: number; reaction_id: number; content_id: number }) {
   try {
-    return await httpHandler.makeRequest({
+    const updatedReactionResponse = await httpHandler.makeRequest({
       url: "/user_content_reactions",
       method: "POST",
       data: {
@@ -39,20 +42,36 @@ export async function updateReactionsForPost({ user_id, reaction_id, content_id 
         content_id,
       },
     });
+
+    return {
+      ok: true,
+      data: updatedReactionResponse?.data,
+    };
   } catch (err: any) {
-    console.log(err.message);
+    return {
+      ok: false,
+      data: err.message,
+    };
   }
 }
 
 export async function deleteReactionForPost({ id }: { id: number }) {
   try {
-    return await httpHandler.makeRequest({
+    const deletedReactionResponse = await httpHandler.makeRequest({
       url: "/user_content_reactions",
-      params: {
+      method: "DELETE",
+      data: {
         id,
       },
     });
+    return {
+      ok: true,
+      data: deletedReactionResponse?.data,
+    };
   } catch (err: any) {
-    console.log(err.message);
+    return {
+      ok: false,
+      data: err.message,
+    };
   }
 }

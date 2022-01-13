@@ -16,7 +16,6 @@ function Home() {
       const usersData = await startupDataServices.getUsers();
       const reactionsData = await startupDataServices.getReactions();
       const userReactionMapping = await startupDataServices.getUserReactionsMapping();
-
       if (usersData?.data || reactionsData?.data || userReactionMapping?.data) {
         setIsLoaded(true);
         setUsers(usersData?.data);
@@ -27,7 +26,7 @@ function Home() {
   }, []);
 
   if (!isLoaded) {
-    return <Loader message="Loading users, reactions..." />;
+    return <Loader message="Loading posts..." />;
   } else {
     return <Posts usersList={users} reactionsList={reactions} userContentReactionMapping={userContentReactionMapping} />;
   }

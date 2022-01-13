@@ -23,6 +23,14 @@ module.exports = {
         display: ["IBM Plex Sans"],
         sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
       },
+      margin: {
+        "-28": "-28px",
+      },
+    },
+  },
+  variants: {
+    extend: {
+      padding: ["hover"],
     },
   },
   plugins: [require("@tailwindcss/forms")],
