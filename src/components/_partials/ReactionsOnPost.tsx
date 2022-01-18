@@ -7,6 +7,7 @@ import { ServiceTypes } from "../../types";
 import Summary from "../_partials/SummaryOnPost";
 import { generalUtils } from "../../utilities";
 import { startupDataServices } from "../../services";
+import { toastConfigConstants } from "../../constants";
 
 export default function ReactionsOnPost({
   usersList,
@@ -19,11 +20,9 @@ export default function ReactionsOnPost({
   userContentReactionMapping: ServiceTypes.UserContentReaction[];
   contentId: number;
 }) {
-  const [toast, setToastMessage] = useState<Partial<{ isActive: boolean; type: string; title: string; message: string }>>({
-    isActive: false,
-    type: "",
-    title: "",
-    message: "",
+  const [count, setCount] = useState({
+    react_count: 0,
+    reaction_id: -1,
   });
   const [toggleReactionsTab, setReactionTab] = useState(false);
   const [reactionsForPost, setReactionsForPost] = useState<ServiceTypes.ReactionsForPosts>({});
@@ -34,11 +33,7 @@ export default function ReactionsOnPost({
   const [addNewReactionResponse, setAddNewReactionResponse] = useState<ServiceTypes.AddReactionOnPostResponse>(
     {} as ServiceTypes.AddReactionOnPostResponse,
   );
-  const [toggleSummaryTab, setToggleSummaryTab] = useState({
-    status: false,
-    contentId: 0,
-    // reactionId: 0,
-  });
+
   const ADD_EVENT = "add";
   const DELETE_EVENT = "delete";
 
@@ -57,12 +52,7 @@ export default function ReactionsOnPost({
     return usersList[Math.floor(Math.random() * usersList.length)].id;
   }
 
-  function getSummaryTabToggleStatus() {
-    setToggleSummaryTab({
-      status: !toggleSummaryTab.status,
-      contentId,
-    });
-  }
+  function getSummaryTabToggleStatus() {}
 
   function isReactionAlreadyActivated(reaction_id: number) {
     if (isActivated.status && isActivated.reaction_id === reaction_id) {
@@ -79,11 +69,10 @@ export default function ReactionsOnPost({
     const deleteReactionResponse = await startupDataServices.deleteReactionForPost(dataToSend);
     if (!deleteReactionResponse.ok) {
       updateExistingReactions(DELETE_EVENT, reactionId, false);
-      setToastMessage({ isActive: true, type: "error", title: "Remove reaction", message: deleteReactionResponse.data });
-      setTimeout(() => {
-        setToastMessage({ isActive: false });
-      }, 1500);
+      generalUtils.displayToastMessage({ type: toastConfigConstants.errorToastType, title: "Remove reaction", message: deleteReactionResponse.data });
+      return;
     }
+    return;
   }
 
   async function addNewReactionToPost(reactionId: number) {
@@ -102,10 +91,7 @@ export default function ReactionsOnPost({
     if (!addedReactionResponse.ok) {
       setIsActivated({ status: false, reaction_id: reactionId });
       updateExistingReactions(ADD_EVENT, reactionId, false);
-      setToastMessage({ isActive: true, type: "error", title: "Add reaction", message: addedReactionResponse.data });
-      setTimeout(() => {
-        setToastMessage({ isActive: false });
-      }, 1500);
+      generalUtils.displayToastMessage({ type: toastConfigConstants.errorToastType, title: "Add reaction", message: addedReactionResponse.data });
       return;
     }
     setAddNewReactionResponse(addedReactionResponse.data);
@@ -135,11 +121,13 @@ export default function ReactionsOnPost({
         // actual condition i.e. deleting the just added reaction
         if (reactionsForPost[reactionId] && isStatusSuccess) {
           reactionsForPost[reactionId] = reactionsForPost[reactionId] - 1;
+          setCount({ react_count: reactionsForPost[reactionId], reaction_id: reactionId });
           setReactionsForPost(reactionsForPost);
         }
         // fallback to previous state if service fails
         else {
           reactionsForPost[reactionId] = reactionsForPost[reactionId] + 1;
+          setCount({ react_count: reactionsForPost[reactionId], reaction_id: reactionId });
           setReactionsForPost(reactionsForPost);
         }
         break;
@@ -147,53 +135,35 @@ export default function ReactionsOnPost({
     }
   }
 
-  console.log("OUTSIDE reactionsForPost", reactionsForPost, addNewReactionResponse);
-
-  if (toast.isActive) {
-    return generalUtils.displayToastMessage(toast.type, toast.title, toast.message);
-  } else if (!toast.isActive) {
-    return (
-      <>
-        <div className="mt-3 flex items-center">
-          {Object.keys(reactionsForPost).map((reaction_id) => (
-            <span
-              key={reaction_id}
-              className={`cursor-pointer inline-flex items-center px-2 py-0.5 rounded-full text-base font-medium text-gray-800 border border-solid m-0.5 ${
-                isActivated.status && isActivated.reaction_id === Number(reaction_id)
-                  ? `bg-coolestBlue-200 border-coolestBlue-300`
-                  : `bg-coolestGray-300 border-white`
-              }`}
-              // onClick={() => deleteUserReaction(Number(reaction_id))}
-              onClick={() => {
-                if (isReactionAlreadyActivated(Number(reaction_id))) addNewReactionToPost(Number(reaction_id));
-              }}>
-              {`${ReactionPostHelpers.getReactionEmoji(reactionsList, Number(reaction_id))} · ${reactionsForPost[Number(reaction_id)]}`}
-            </span>
-          ))}
-          <div className="relative m-0.5" onClick={toggleReactionBadge}>
-            {toggleReactionsTab ? <ReactionBadge reactionsList={reactionsList} addNewReaction={addNewReactionToPost} /> : <></>}
-            <AddReactionButton />
-          </div>
-          <div className="cursor-pointer p-2" onClick={getSummaryTabToggleStatus}>
-            <u>Summary</u>
-          </div>
+  return (
+    <>
+      <div className="mt-3 flex items-center">
+        {Object.keys(reactionsForPost).map((reaction_id) => (
+          <span
+            key={reaction_id}
+            id="reactions_on_posts"
+            className={`cursor-pointer inline-flex items-center px-2 py-0.5 rounded-full text-base font-medium text-gray-800 border border-solid m-0.5 ${
+              isActivated.status && isActivated.reaction_id === Number(reaction_id)
+                ? `bg-coolestBlue-200 border-coolestBlue-300`
+                : `bg-coolestGray-300 border-white`
+            }`}
+            // onClick={() => deleteUserReaction(Number(reaction_id))}
+            onClick={() => {
+              if (isReactionAlreadyActivated(Number(reaction_id))) addNewReactionToPost(Number(reaction_id));
+            }}>
+            {`${ReactionPostHelpers.getReactionEmoji(reactionsList, Number(reaction_id))} · ${
+              count.reaction_id === Number(reaction_id) ? count.react_count : reactionsForPost[Number(reaction_id)]
+            }`}
+          </span>
+        ))}
+        <div className="cursor-pointer relative m-0.5" onClick={toggleReactionBadge}>
+          {toggleReactionsTab ? <ReactionBadge reactionsList={reactionsList} addNewReaction={addNewReactionToPost} /> : <></>}
+          <AddReactionButton />
         </div>
-        <div>
-          {toggleSummaryTab.status && toggleSummaryTab.contentId === contentId ? (
-            <Summary
-              usersList={usersList}
-              reactionsList={reactionsList}
-              userContentReactionMapping={userContentReactionMapping}
-              contentId={contentId}
-              selectedReactionId={0}
-            />
-          ) : (
-            <></>
-          )}
+        <div className="cursor-pointer p-2" onClick={getSummaryTabToggleStatus}>
+          <u>Summary</u>
         </div>
-      </>
-    );
-  } else {
-    return <></>;
-  }
+      </div>
+    </>
+  );
 }

@@ -1,5 +1,4 @@
-import ErrorToast from "../components/core/ErrorToast";
-import SuccessToast from "../components/core/SuccessToast";
+import { toastConfigConstants } from "../constants";
 
 export function isEmpty(value: any) {
   return (
@@ -13,14 +12,17 @@ export function isEmpty(value: any) {
   );
 }
 
-export function displayToastMessage(type: string = "", title: string = "", message: string = "") {
-  if (type === "success") {
-    return <SuccessToast title={title} message={message} />;
-  } else if (type === "error") {
-    return <ErrorToast title={title} message={message} />;
-  } else {
-    return <></>;
-  }
+export function displayToastMessage({ type, title, message }: { type: string; title: string; message: string }) {
+  const dataToSend = {
+    type,
+    title,
+    message,
+    timeout: 3000,
+  };
+  const toastDispatcher = new CustomEvent(toastConfigConstants.toastEvent, {
+    detail: dataToSend,
+  });
+  globalThis && globalThis.dispatchEvent(toastDispatcher);
 }
 
 // export function displaySuccessToastMessage(title: string, message: string, timer: number = 5000) {

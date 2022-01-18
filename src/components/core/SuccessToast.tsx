@@ -1,11 +1,17 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
 
-export default function SuccessToast({ title, message }: { title: string; message: string }) {
+export default function SuccessToast({ toast }: { toast: { id: string; title: string; message: string; type: string; duration: number } }) {
   const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(false);
+    }, toast.duration);
+  }, [toast]);
 
   return (
     <>
@@ -29,8 +35,8 @@ export default function SuccessToast({ title, message }: { title: string; messag
                     <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">{title}</p>
-                    <p className="mt-1 text-sm text-gray-500">{message}</p>
+                    <p className="text-sm font-medium text-gray-900">{toast.title}</p>
+                    <p className="mt-1 text-sm text-gray-500">{toast.message}</p>
                   </div>
                   <div className="ml-4 flex-shrink-0 flex">
                     <button
