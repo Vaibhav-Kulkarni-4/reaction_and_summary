@@ -56,6 +56,24 @@ export async function updateReactionsForPost({ user_id, reaction_id, content_id 
 }
 
 export async function deleteReactionForPost({ id }: { id: number }) {
+  // fetch(`/user_content_reactions?id=${id}`, {
+  //   method: "DELETE",
+  // })
+  //   .then((res) => res.json())
+  //   .then((res) => {
+  //     console.log(res);
+  //     return {
+  //       ok: true,
+  //       data: res,
+  //     };
+  //   })
+  //   .catch((err) => {
+  //     return {
+  //       ok: false,
+  //       data: err.message,
+  //     };
+  //   });
+
   try {
     const deletedReactionResponse = await httpHandler.makeRequest({
       url: "/user_content_reactions",

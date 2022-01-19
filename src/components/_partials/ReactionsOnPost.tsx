@@ -4,7 +4,6 @@ import AddReactionButton from "../core/AddReactionButton";
 import ReactionBadge from "../core/Reactions";
 import ReactionPostHelpers from "../../helpers/postsHelpers";
 import { ServiceTypes } from "../../types";
-import Summary from "../_partials/SummaryOnPost";
 import { generalUtils } from "../../utilities";
 import { startupDataServices } from "../../services";
 import { toastConfigConstants } from "../../constants";
@@ -14,11 +13,15 @@ export default function ReactionsOnPost({
   reactionsList,
   userContentReactionMapping,
   contentId,
+  getSummaryTabToggleStatus,
+  triggerCall,
 }: {
   usersList: ServiceTypes.User[];
   reactionsList: ServiceTypes.Reaction[];
   userContentReactionMapping: ServiceTypes.UserContentReaction[];
   contentId: number;
+  getSummaryTabToggleStatus: () => void;
+  triggerCall: () => void;
 }) {
   const [count, setCount] = useState({
     react_count: 0,
@@ -52,8 +55,6 @@ export default function ReactionsOnPost({
     return usersList[Math.floor(Math.random() * usersList.length)].id;
   }
 
-  function getSummaryTabToggleStatus() {}
-
   function isReactionAlreadyActivated(reaction_id: number) {
     if (isActivated.status && isActivated.reaction_id === reaction_id) {
       return true;
@@ -70,9 +71,7 @@ export default function ReactionsOnPost({
     if (!deleteReactionResponse.ok) {
       updateExistingReactions(DELETE_EVENT, reactionId, false);
       generalUtils.displayToastMessage({ type: toastConfigConstants.errorToastType, title: "Remove reaction", message: deleteReactionResponse.data });
-      return;
     }
-    return;
   }
 
   async function addNewReactionToPost(reactionId: number) {
@@ -87,6 +86,7 @@ export default function ReactionsOnPost({
     };
     setIsActivated({ status: true, reaction_id: reactionId });
     updateExistingReactions(ADD_EVENT, reactionId, true);
+    triggerCall();
     const addedReactionResponse = await startupDataServices.updateReactionsForPost(dataToSend);
     if (!addedReactionResponse.ok) {
       setIsActivated({ status: false, reaction_id: reactionId });

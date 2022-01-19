@@ -1,4 +1,7 @@
+import { localStorageConstants, toastConfigConstants } from "../constants";
+
 import type { ServiceTypes } from "../types";
+import { generalUtils } from "../utilities";
 
 class ReactionPostHelpers {
   getReactionsCountForPost(contentReactionMapping: ServiceTypes.UserContentReaction[]) {
@@ -54,6 +57,21 @@ class ReactionPostHelpers {
   getReactionEmoji(reactionsList: ServiceTypes.Reaction[], reactionId: number) {
     return reactionsList.filter((reaction) => reaction.id === reactionId)[0]?.emoji;
   }
+
+  // getReactionsFromDB() {
+  //   try {
+  //     let reactionsOnPosts: any = localStorage.getItem(localStorageConstants.newReactionOnPostKey);
+  //     reactionsOnPosts = JSON.parse(reactionsOnPosts);
+  //     return reactionsOnPosts;
+  //   } catch (error: any) {
+  //     return generalUtils.displayToastMessage({ type: toastConfigConstants.errorToastType, title: "Summary on Posts", message: error.message });
+  //   }
+  // }
+
+  // setNewReactionsToDB({ content_id, id, reaction_id, user_id }: { content_id: number; id: number; reaction_id: number; user_id: number }) {
+  //   const data = this.getReactionsFromDB()
+  //   data
+  // }
 }
 
 export default new ReactionPostHelpers();
