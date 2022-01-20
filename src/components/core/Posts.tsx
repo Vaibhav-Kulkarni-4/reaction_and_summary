@@ -24,6 +24,7 @@ export default function DisplayPosts({
 
   const [toggleSummaryTab, setToggleSummaryTab] = useState({
     status: false,
+    content_id: 0,
   });
   const [trigger, setTrigger] = useState(false);
   const [newUserContentMapping, setNewUserContentMapping] = useState([]);
@@ -39,9 +40,10 @@ export default function DisplayPosts({
     setTrigger(!trigger);
   }
 
-  function getSummaryTabToggleStatus() {
+  function getSummaryTabToggleStatus(content_id: number) {
     setToggleSummaryTab({
       status: !toggleSummaryTab.status,
+      content_id,
     });
   }
 
@@ -86,7 +88,7 @@ export default function DisplayPosts({
                     </tr>
                   </tbody>
                 </table>
-                {toggleSummaryTab.status ? (
+                {toggleSummaryTab.status && toggleSummaryTab.content_id === 1 ? (
                   <Summary usersList={usersList} reactionsList={reactionsList} userContentReactionMapping={newUserContentMapping} contentId={1} />
                 ) : (
                   <></>
@@ -133,7 +135,7 @@ export default function DisplayPosts({
                     </tr>
                   </tbody>
                 </table>
-                {toggleSummaryTab.status ? (
+                {toggleSummaryTab.status && toggleSummaryTab.content_id === 2 ? (
                   <Summary usersList={usersList} reactionsList={reactionsList} userContentReactionMapping={newUserContentMapping} contentId={2} />
                 ) : (
                   <></>

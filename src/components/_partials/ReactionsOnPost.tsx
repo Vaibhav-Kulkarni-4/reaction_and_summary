@@ -20,7 +20,7 @@ export default function ReactionsOnPost({
   reactionsList: ServiceTypes.Reaction[];
   userContentReactionMapping: ServiceTypes.UserContentReaction[];
   contentId: number;
-  getSummaryTabToggleStatus: () => void;
+  getSummaryTabToggleStatus: (content_id: number) => void;
   triggerCall: () => void;
 }) {
   const [count, setCount] = useState({
@@ -160,7 +160,7 @@ export default function ReactionsOnPost({
           {toggleReactionsTab ? <ReactionBadge reactionsList={reactionsList} addNewReaction={addNewReactionToPost} /> : <></>}
           <AddReactionButton />
         </div>
-        <div className="cursor-pointer p-2" onClick={getSummaryTabToggleStatus}>
+        <div className="cursor-pointer p-2" onClick={() => getSummaryTabToggleStatus(contentId)}>
           <u>Summary</u>
         </div>
       </div>
