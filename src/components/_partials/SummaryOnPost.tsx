@@ -18,6 +18,7 @@ export default function SummaryTab({
   const [reactionsForPost, setReactionsForPost] = useState<any>({});
   const [reactionId, setReactionId] = useState<string | number>();
   const [filteredUsersForReaction, setFilteredUsersForReaction] = useState<any>();
+  let [current, setCurrent] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     setReactionsForPost(ReactionPostHelpers.getUsersCountForReaction(userContentReactionMapping, contentId));
@@ -44,30 +45,35 @@ export default function SummaryTab({
     }
   }
 
+  function prepareDataForRendering(reaction_id: string) {
+    current = {};
+    current[reaction_id] = true;
+    setCurrent(current);
+    renderSummary(reaction_id === "All" ? reaction_id : Number(reaction_id));
+  }
+
   return (
     <div className="px-6 whitespace-nowrap">
       <div className="px-1 overflow-y-hidden">
         <p className="font-display font-semibold text-base not-italic leading-4 tracking-wide text-coolestGray-900">Reactions</p>
         <nav className="-mb-px z-10 flex space-x-8" aria-label="Tabs">
-          {Object.keys(reactionsForPost).map((reactionId) => (
+          {Object.keys(reactionsForPost).map((reaction_id) => (
             <p
-              onClick={() => {
-                reactionsForPost[reactionId].current = !reactionsForPost[reactionId].current;
-                renderSummary(reactionId === "All" ? reactionId : Number(reactionId));
-              }}
-              key={reactionsForPost[reactionId]}
+              onClick={() => prepareDataForRendering(reaction_id)}
+              key={Math.random()}
               className={classNames(
-                reactionsForPost[reactionId].current
+                current[reaction_id]
                   ? "border-coolestBlue-100 text-coolestBlue-100"
                   : "border-transparent font-normal text-gray-800 hover:font-semibold hover:border-coolestBlue-100",
                 "group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm cursor-pointer",
-              )}
-              aria-current={reactionsForPost[reactionId].current ? "page" : undefined}>
-              {reactionId !== "All" ? ReactionPostHelpers.getReactionEmoji(reactionsList, Number(reactionId)) : "All"}
-              {reactionId !== "All" ? (
+              )}>
+              {/* Get reaction emoji to display in summary tab. */}
+              {reaction_id !== "All" ? ReactionPostHelpers.getReactionEmoji(reactionsList, Number(reaction_id)) : "All"}
+              {reaction_id !== "All" ? (
                 <span>
                   <span className="mx-1">·</span>
-                  <span>{reactionsForPost[reactionId].length}</span>
+                  {/* Display the count pf reaction emoji in summary tab. */}
+                  <span>{reactionsForPost[reaction_id].length}</span>
                 </span>
               ) : (
                 ""
